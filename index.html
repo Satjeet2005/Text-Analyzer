@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Character Counter</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Main stylesheet -->
+    <link rel="stylesheet" href="style.css" />
+    <!-- FontAwesome-->
+    <script
+      src="https://kit.fontawesome.com/4f42eb6c11.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body class="flex flex-col margin-auto body--dark">
+    <!--
+      Navigation Bar
+      - Displays logo for both dark and light themes
+      - Theme toggle button (sun/moon icons)
+    -->
+    <nav class="nav flex justify-between align-center">
+      <img
+        src="images/logo-dark-theme.svg"
+        alt="logo"
+        class="logo logo--dark"
+      />
+      <img
+        src="images/logo-light-theme.svg"
+        alt="logo"
+        class="logo logo--light"
+      />
+      <div class="theme-change-container flex">
+        <img src="images/icon-sun.svg" alt="sun" class="dark-icon" />
+        <img src="images/icon-moon.svg" alt="moon" class="light-icon" />
+      </div>
+    </nav>
+
+    <!--
+      Main Text Input Section
+      - Heading and textarea for user input
+      - Error message for character limit
+      - Options: exclude spaces, set character limit
+      - Displays estimated reading time
+    -->
+    <section class="text-section">
+      <h1 class="main-heading text-center">
+        Analyze your text<br />in real-time.
+      </h1>
+      <textarea
+        class=""
+        id="word-count"
+        placeholder="Start typing here... (or paste your text)"
+      ></textarea>
+      <!-- Error message shown when character limit is exceeded -->
+      <div class="flex gap-8 error-state-container hidden">
+        <img src="images/icon-info.svg" />
+        <p class="error-state-text">
+          Limit reached! Your text exceeds 15 characters.
+        </p>
+      </div>
+      <div class="text-area-changes flex flex-wrap gap-row-15 justify-between">
+        <div class="flex flex-wrap gap-col-20 gap-row-15">
+          <!-- Option to exclude spaces from character count -->
+          <div class="checkbox-container flex align-center gap-10">
+            <input
+              type="checkbox"
+              class="exclude-spaces-checkbox content-box"
+            />
+            <label for="checkbox" class="capitalize">exclude spaces</label>
+          </div>
+          <div class="flex align-center gap-8">
+            <!-- Option to set a custom character limit -->
+            <div class="checkbox-container flex align-center gap-10">
+              <input type="checkbox" class="char-limit-checkbox content-box" />
+              <label for="checkbox" class="capitalize"
+                >set character limit</label
+              >
+            </div>
+            <div class="char-limit-container hidden">
+              <input type="number" min="0" value="0" class="char-limit-input" />
+            </div>
+          </div>
+        </div>
+        <!-- Displays estimated reading time based on word count -->
+        <div class="flex align-center">
+          <p class="reading-time-text">Approx.reading time: 0 minute</p>
+        </div>
+      </div>
+    </section>
+
+    <!--
+      Text Statistics Section
+      - Shows total characters, word count, and sentence count
+      - Each stat has its own styled container and icon
+    -->
+    <section class="text-info flex gap-15 flex-col">
+      <div class="char-count-container count-container flex justify-between">
+        <div class="count-subcontainer">
+          <p class="char-count count">0</p>
+          <p class="count-text capitalize">total characters</p>
+        </div>
+        <img
+          src="images/pattern-character-count.svg"
+          alt="pattern"
+          class="pattern"
+        />
+      </div>
+
+      <div class="word-count-container count-container flex justify-between">
+        <div class="count-subcontainer">
+          <p class="word-count count">0</p>
+          <p class="count-text capitalize">word count</p>
+        </div>
+        <img
+          src="images/pattern-word-count.svg"
+          alt="pattern"
+          class="pattern"
+        />
+      </div>
+
+      <div
+        class="sentence-count-container count-container flex justify-between"
+      >
+        <div class="count-subcontainer">
+          <p class="sentence-count count">0</p>
+          <p class="count-text capitalize">sentence count</p>
+        </div>
+        <img
+          src="images/pattern-sentence-count.svg"
+          alt="pattern"
+          class="pattern"
+        />
+      </div>
+    </section>
+
+    <!--
+      Letter Density Visualization
+      - Shows frequency of each character as a progress bar
+      - "See more"/"See less" button toggles visibility of extra bars
+      - Shows a message when no text is present
+    -->
+    <section class="letter-density-container">
+      <h2 class="letter-density-heading">Letter density</h2>
+      <p class="empty-text">
+        No characters found. Start typing to see letter density.
+      </p>
+      <div class="progress-container-all flex flex-col gap-8">
+        <!-- Progress bars for each character will be dynamically inserted here -->
+      </div>
+
+      <!-- Button to expand/collapse the letter density list -->
+      <button class="btn flex align-center gap-8 hidden">
+        <p class="btn-text see-more">See more</p>
+        <p class="btn-text see-less hidden">See less</p>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+          class="icon down hidden"
+        >
+          <path
+            d="M233.4 406.6c12.5 12.5 32.8 12.5 45.3 0l192-192c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L256 338.7 86.6 169.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l192 192z"
+          />
+        </svg>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 512 512"
+          class="icon up"
+        >
+          <path
+            d="M233.4 105.4c12.5-12.5 32.8-12.5 45.3 0l192 192c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L256 173.3 86.6 342.6c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3l192-192z"
+          />
+        </svg>
+      </button>
+    </section>
+  </body>
+  <!-- Main JavaScript -->
+  <script src="script.js"></script>
+</html>
