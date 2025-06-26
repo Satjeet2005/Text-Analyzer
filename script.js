@@ -12,7 +12,7 @@ themeContainer.addEventListener("click", (e) => {
 const textArea = document.querySelector("#word-count");
 
 // On every input, update all counters and UI states
-textArea.addEventListener("input", () => {
+textArea.addEventListener('input', () => {
   let excludeSpaces = checkExcludeSpaces();
   countTotalCharacters(excludeSpaces);
   countTotalWords();
@@ -83,6 +83,7 @@ function countTotalWords() {
   const textArea = document.querySelector("#word-count");
   let origValue = textArea.value;
   if (origValue === "") {
+    readingTime(0);
     renderTotalWords(0);
     return;
   }
@@ -225,6 +226,9 @@ function showMore(map) {
       if (count > 6) {
         container.classList.add("hidden");
       }
+      else{
+        container.classList.remove("hidden");
+      }
       count++;
     });
   } else {
@@ -315,14 +319,24 @@ function checkLetterDensity(value) {
 
 // Estimates and displays approximate reading time
 function readingTime(words) {
-  let wpm = 200; // Average reading speed
-  let approximateTime = words / wpm;
-  let appText = document.querySelector(".reading-time-text");
-  if (approximateTime > 0 && approximateTime < 1) {
-    appText.innerHTML = `Approx.reading time : 0 min`;
+  const wpm = 200;
+  const appText = document.querySelector(".reading-time-text");
+
+  if (words === 0) {
+    appText.innerHTML = `Approx. reading time: 0 min`;
+    return;
+  }
+
+  const timeInMinutes = words / wpm;
+
+  if (timeInMinutes < 1) {
+    appText.innerHTML = `Approx. reading time: less than 1 min`;
   } else {
-    appText.innerHTML = `Approx.reading time < ${Math.floor(
-      approximateTime
-    )} min`;
+    const roundedMinutes = Math.round(timeInMinutes);
+    appText.innerHTML = `Approx. reading time: ${roundedMinutes} min`;
   }
 }
+
+
+
+
